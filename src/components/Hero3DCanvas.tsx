@@ -22,7 +22,7 @@ export const Hero3DCanvas: React.FC = () => {
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     mount.appendChild(renderer.domElement);
 
     // Warm gallery lighting
@@ -177,11 +177,11 @@ export const Hero3DCanvas: React.FC = () => {
 
     // Animation
     let animId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const elapsed = (performance.now() - startTime) * 0.001;
 
       // Smooth floating oscillation
       floatingGroup.position.y = Math.sin(elapsed * 1.5) * 0.018;

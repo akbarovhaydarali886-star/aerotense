@@ -53,7 +53,7 @@ export const Tensegrity3DCanvas: React.FC<Tensegrity3DCanvasProps> = ({
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     rendererRef.current = renderer;
     mount.appendChild(renderer.domElement);
 
@@ -296,11 +296,11 @@ export const Tensegrity3DCanvas: React.FC<Tensegrity3DCanvasProps> = ({
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const elapsed = (performance.now() - startTime) * 0.001;
 
       // Subtle atmospheric breathing / micro-vibration in the upper suspended slab
       if (upperGroup) {
